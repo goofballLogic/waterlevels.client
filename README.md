@@ -8,6 +8,7 @@ As a node module, you can simply require the package:
 
 
 (require)
+
 ```javascript
 var client = require( "waterlevels.client" )( process );
 
@@ -15,6 +16,7 @@ await client.listProviders(); // => [ "waterlevel.ie" ];
 ```
 
 (ES6)
+
 ```javascript
 import clientFactory from "waterlevels.client";
 const client = clientFactory( process );
@@ -25,6 +27,7 @@ await client.listProviders(); // => [ "waterlevel.ie" ];
 ## browser
 
 (ES6 e.g. webpack)
+
 ```javascript
 import clientFactory from "waterlevels.client";
 const config = { env: { AWS_REGION: "eu-west-1", AWS_BUCKET: "tc2-waterlevels.sync" } };
@@ -40,6 +43,7 @@ Return a list of data providers for which data has been gathered in the waterlev
 Returns `Array<string>`
 
 ### Example
+
 ```javascript
 await client.listProviders(); // => [ "waterlevel.ie" ]
 ```
@@ -49,13 +53,15 @@ await client.listProviders(); // => [ "waterlevel.ie" ]
 Return a list of days for which data is stored for a particular provider. Optionally including a range of dates to query.
 
 Parameters
- - `provider : string`
- - `startDay : string` (optional)
- - `endDay : string` (optional)
+
+- provider `string`
+- startDay `string` (optional)
+- endDay `string` (optional)
 
 Returns `Array<string>`
 
 ### Example
+
 ```javascript
 await client.listDays( "waterlevel.ie", "2019-01-01", "2019-06-30" );
 /*
@@ -78,12 +84,14 @@ await client.listDays( "waterlevel.ie", "2019-01-01", "2019-06-30" );
 Returns all the data from a particular provider on a particular day
 
 Parameters:
- - `provider : string`
- - `day : string`
+
+- provider `string`
+- day `string`
 
 Returns: `Array<object>`
 
 ### Example
+
 ```javascript
 await client.getData( "waterlevel.ie", "2019-02-19" )
 /*
@@ -129,11 +137,13 @@ await client.getData( "waterlevel.ie", "2019-02-19" )
 Gets the raw extraction data used to create a given data item
 
 Parameters:
- - `extractionId: string`
+
+- extractionId `string`
 
 Returns: `string`
 
 ### Example
+
 ```javascript
 const data = await client.getData( "waterlevel.ie", "2019-02-19" );
 
