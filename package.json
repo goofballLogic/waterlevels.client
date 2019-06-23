@@ -1,0 +1,29 @@
+{
+  "name": "waterlevels.client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --experimental-modules test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goofballLogic/waterlevels.client.git"
+  },
+  "author": "tinycode2",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/goofballLogic/waterlevels.client/issues"
+  },
+  "homepage": "https://github.com/goofballLogic/waterlevels.client#readme",
+  "devDependencies": {
+    "node-fetch": "^2.6.0",
+    "webpack": "^4.35.0",
+    "webpack-cli": "^3.3.4"
+  },
+  "type": "module",
+  "dependencies": {
+    "aws-sdk": "^2.480.0",
+    "s3": "^4.4.0"
+  }
+}
