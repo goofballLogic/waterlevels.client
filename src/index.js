@@ -1,4 +1,4 @@
-import AWS from "aws-sdk"
+import S3 from 'aws-sdk/clients/s3.js'
 
 function required( config, name, what ) {
 
@@ -10,7 +10,7 @@ export default function( config ) {
 
     const region = required( config, "AWS_REGION", "AWS region to use for querying data" );
     const bucket = required( config, "AWS_BUCKET", "AWS bucket to use for querying data" );
-    const client = new AWS.S3( { region } );
+    const client = new S3( { region } );
 
     return {
 
