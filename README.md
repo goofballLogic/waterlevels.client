@@ -6,14 +6,14 @@ There are two ways to use this library.
 
 As a node module, you can simply require the package. Passing the `process` global object allows the program to load AWS_REGION and AWS_BUCKET from your configured environment variables.
 
-### 1.a Configure your environment variables
+### Configure your environment variables
 
 ```bash
 export AWS_REGION=eu-west-1
 export AWS_BUCKET=tc2-waterlevels.sync
 ```
 
-### 1.b Use `require` or `import` to obtain and configure your client object
+### Use `require` or `import` to obtain and configure your `client` object
 
 (require)
 
@@ -46,7 +46,9 @@ const client = clientFactory( config );
 await client.listProviders(); // => [ "waterlevel.ie" ]
 ```
 
-# listProviders
+# API
+
+## listProviders
 
 Return a list of data providers for which data has been gathered in the waterlevels.sync store.
 
@@ -58,7 +60,7 @@ Returns `Array<string>`
 await client.listProviders(); // => [ "waterlevel.ie" ]
 ```
 
-# listDays
+## listDays
 
 Return a list of days for which data is stored for a particular provider. Optionally including a range of dates to query.
 
@@ -89,7 +91,7 @@ await client.listDays( "waterlevel.ie", "2019-01-01", "2019-06-30" );
 */
 ```
 
-# getData
+## getData
 
 Returns all the data from a particular provider on a particular day
 
@@ -142,7 +144,7 @@ await client.getData( "waterlevel.ie", "2019-02-19" )
 */
 ```
 
-# getExtraction
+## getExtraction
 
 Gets the raw extraction data used to create a given data item
 
