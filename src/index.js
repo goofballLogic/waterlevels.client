@@ -47,7 +47,7 @@ export default function( config ) {
 
             } ).promise();
             return daysResult.Contents
-                .filter( x => x.Key <= endOn )
+                .filter( x => !endDay || x.Key <= endOn )
                 .map( x => x.Key.substring( prefix.length ) )
                 .sort();
 
