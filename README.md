@@ -160,7 +160,7 @@ Returns: `string`
 const data = await client.getData( "waterlevel.ie", "2019-02-19" );
 
 // get extractionId from first data item
-const data[ 0 ].extractionId;
+const extractionId = data[ 0 ].extractionId;
 
 // get raw extract
 const extract = await client.getExtract( extractionId );
