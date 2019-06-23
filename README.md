@@ -2,10 +2,18 @@
 
 There are two ways to use this library.
 
-## node.js
+## Node.js
 
-As a node module, you can simply require the package:
+As a node module, you can simply require the package. Passing the `process` global object allows the program to load AWS_REGION and AWS_BUCKET from your configured environment variables.
 
+### 1. Configure your environment variables
+
+```bash
+export AWS_REGION=eu-west-1
+export AWS_BUCKET=tc2-waterlevels.sync
+```
+
+### 2. Use `require` or `import` to obtain and configure your client object
 
 (require)
 
@@ -24,7 +32,9 @@ const client = clientFactory( process );
 await client.listProviders(); // => [ "waterlevel.ie" ];
 ```
 
-## browser
+## Browser
+
+In the browser you need to pass the configuration details by hand as shown below
 
 (ES6 e.g. webpack)
 
