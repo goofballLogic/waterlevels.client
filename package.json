@@ -23,7 +23,6 @@
   },
   "type": "module",
   "dependencies": {
-    "aws-sdk": "^2.480.0",
-    "s3": "^4.4.0"
+    "aws-sdk": "^2.480.0"
   }
 }
