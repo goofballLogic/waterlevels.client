@@ -35,7 +35,9 @@ await client.listProviders(); // => [ "waterlevel.ie" ]
 
 # listProviders
 
-Return a list of data providers for which data has been gathered in the waterlevels.sync store
+Return a list of data providers for which data has been gathered in the waterlevels.sync store.
+
+Returns `Array<string>`
 
 ### Example
 ```javascript
@@ -45,6 +47,13 @@ await client.listProviders(); // => [ "waterlevel.ie" ]
 # listDays
 
 Return a list of days for which data is stored for a particular provider. Optionally including a range of dates to query.
+
+Parameters
+ - `provider : string`
+ - `startDay : string` (optional)
+ - `endDay : string` (optional)
+
+Returns `Array<string>`
 
 ### Example
 ```javascript
@@ -67,6 +76,12 @@ await client.listDays( "waterlevel.ie", "2019-01-01", "2019-06-30" );
 # getData
 
 Returns all the data from a particular provider on a particular day
+
+Parameters:
+ - `provider : string`
+ - `day : string`
+
+Returns: `Array<object>`
 
 ### Example
 ```javascript
@@ -107,3 +122,27 @@ await client.getData( "waterlevel.ie", "2019-02-19" )
   }
 ]
 */
+```
+
+# getExtraction
+
+Gets the raw extraction data used to create a given data item
+
+Parameters:
+ - `extractionId: string`
+
+Returns: `string`
+
+### Example
+```javascript
+const data = await client.getData( "waterlevel.ie", "2019-02-19" );
+
+// get extractionId from first data item
+const data[ 0 ].extractionId;
+
+// get raw extract
+const extract = await client.getExtract( extractionId );
+/*
+"{"crs":4326,"type":"FeatureCollection","features":[{"geometry":{"type":"Point","coordinates":[-8.238554,53.361687]},"type":"Feature","id":990,"properties":{"url":"/0000026007/0002/","csv_file":"/data/month/26007_0002.csv","station.name":"Bellagill","value":16.16,"datetime":"2019-06-23 14:00:00+00:00","sensor.ref":"0002","station.ref":"0000026007","station.region_id":2,"err_code":99}},{"geometry":{"type":"Point","coordinates":[-8.238554,53.361687]},"type":"Feature","id":841,"properties":{"url":"/ . . .
+*/
+```

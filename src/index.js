@@ -65,6 +65,18 @@ export default function( config ) {
             const json = JSON.parse( body );
             return Object.values( json );
 
+        },
+
+        async getExtract( extractionId ) {
+
+            const result = await client.getObject( {
+
+                Bucket: bucket,
+                Key: `extracts/${extractionId}`
+
+            } ).promise();
+            return result.Body.toString();
+
         }
 
     };

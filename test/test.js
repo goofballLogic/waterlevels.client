@@ -16,4 +16,9 @@ const client = clientFactory( process );
     const data = await client.getData( "waterlevel.ie", "2019-06-17" );
     assert( data.filter( x => x.name === "Ladyswell" ).length > 1, "Results for Ladyswell not found in the list of measurements for waterlevel.ie on 2019-06-17" );
 
+    console.log( "Query for extract from data" );
+    const { extractionId } = data[ 0 ];
+    const extract = await client.getExtract( extractionId );
+    assert( extract, "Data extract is missing" );
+
 }());
