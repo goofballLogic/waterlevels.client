@@ -32,9 +32,14 @@ export default function( config ) {
 
             const prefix = `providers/${provider}/`;
 
-            const startAfterDate = new Date( startDay );
-            startAfterDate.setDate( -1 );
-            const startAfter = `${prefix}${startAfterDate.toISOString().substring( 0, 10 )}`;
+            const startAfter = ( function () {
+
+                if( !startDay ) return null;
+                const startAfterDate = startDay ? new Date( startDay ) : null;
+                if ( startAfterDate ) startAfterDate.setDate( -1 );
+                return `${prefix}${startAfterDate.toISOString().substring( 0, 10 )}`;
+
+            }() );
 
             const endOn = `${prefix}${endDay}`;
 
