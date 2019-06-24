@@ -16,7 +16,7 @@ export default function( config ) {
 
         async listProviders() {
 
-            const providersResult = await client.listObjectsV2( {
+            const providersResult = await client.makeUnauthenticatedRequest( "listObjectsV2", {
 
                 Bucket: bucket,
                 Prefix: "providers/",
@@ -43,7 +43,7 @@ export default function( config ) {
 
             const endOn = `${prefix}${endDay}`;
 
-            const daysResult = await client.listObjectsV2( {
+            const daysResult = await client.makeUnauthenticatedRequest( "listObjectsV2", {
 
                 Bucket: bucket,
                 Prefix: prefix,
@@ -60,7 +60,7 @@ export default function( config ) {
 
         async getData( provider, day ) {
 
-            const result = await client.getObject( {
+            const result = await client.makeUnauthenticatedRequest( "getObject", {
 
                 Bucket: bucket,
                 Key: `providers/${provider}/${day}`
@@ -74,7 +74,7 @@ export default function( config ) {
 
         async getExtract( extractionId ) {
 
-            const result = await client.getObject( {
+            const result = await client.makeUnauthenticatedRequest( "getObject", {
 
                 Bucket: bucket,
                 Key: `extracts/${extractionId}`
