@@ -2,7 +2,7 @@
   "name": "waterlevels.client",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "dist/main.node.js",
   "scripts": {
     "test": "node --experimental-modules test/test.js"
   },
