@@ -18,7 +18,7 @@ export AWS_BUCKET=tc2-waterlevels.sync
 (require)
 
 ```javascript
-var client = require( "waterlevels.client" )( process );
+var client = require( "waterlevels.client" ).default( process );
 
 await client.listProviders(); // => [ "waterlevel.ie" ];
 ```
