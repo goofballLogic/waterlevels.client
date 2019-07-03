@@ -19,18 +19,17 @@ export default function( config ) {
             const providersResult = await client.makeUnauthenticatedRequest( "listObjectsV2", {
 
                 Bucket: bucket,
-                Prefix: "providers/",
+                Prefix: "provider/",
                 Delimiter: "/"
 
             } ).promise();
-
-            return providersResult.CommonPrefixes.map( ( { Prefix } ) => Prefix.substring( 10, Prefix.length - 1 ) );
+            return providersResult.CommonPrefixes.map( ( { Prefix } ) => Prefix.substring( 9, Prefix.length - 1 ) );
 
         },
 
         async listDays( provider, startDay, endDay ) {
 
-            const prefix = `providers/${provider}/`;
+            const prefix = `provider/${provider}/day/`;
 
             const startAfter = ( function () {
 
@@ -41,8 +40,6 @@ export default function( config ) {
 
             }() );
 
-            const endOn = `${prefix}${endDay}`;
-
             const daysResult = await client.makeUnauthenticatedRequest( "listObjectsV2", {
 
                 Bucket: bucket,
@@ -51,9 +48,10 @@ export default function( config ) {
                 StartAfter: startAfter
 
             } ).promise();
+
             return daysResult.Contents
-                .filter( x => !endDay || x.Key <= endOn )
                 .map( x => x.Key.substring( prefix.length ) )
+                .filter( x => !endDay || x <= endDay )
                 .sort();
 
         },
@@ -63,7 +61,7 @@ export default function( config ) {
             const result = await client.makeUnauthenticatedRequest( "getObject", {
 
                 Bucket: bucket,
-                Key: `providers/${provider}/${day}`
+                Key: `provider/${provider}/day/${day}`
 
             } ).promise();
             const body = result.Body.toString();
