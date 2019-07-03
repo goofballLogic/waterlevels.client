@@ -32,6 +32,7 @@ const client = clientFactory( process );
     console.log( "Query for station's data" );
     const stationData = await client.getStationData( "waterlevel.ie", "Blackcastle_0000007037" );
     assert( stationData.station.name === "Blackcastle", "Blackcastle station not returned: " + JSON.stringify( stationData ) );
+console.log( JSON.stringify( stationData, null, 3 ) );
 
     console.log( "Query for a group of stations" );
     const group = [
