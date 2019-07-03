@@ -14,15 +14,23 @@ const client = clientFactory( process );
 
     console.log( "Query all days for provider" );
     const allDays = await client.listDays( "waterlevel.ie" );
-    assert( days.find( x => x === "2019-03-07" ), "2019-03-07 not found in the list of all days for waterlevel.ie" );
+    assert( allDays.find( x => x === "2019-03-07" ), "2019-03-07 not found in the list of all days for waterlevel.ie" );
 
     console.log( "Query for day's data" );
-    const data = await client.getData( "waterlevel.ie", "2019-03-07" );
-    assert( data.filter( x => x.station.name === "Tinacarra" ).length > 1, "Results for Tinacarra not found in the list of measurements for waterlevel.ie on 2019-06-17: " + JSON.stringify( data ) );
+    const dayData = await client.getDayData( "waterlevel.ie", "2019-03-07" );
+    assert( dayData.filter( x => x.station.name === "Tinacarra" ).length > 1, "Results for Tinacarra not found in the list of measurements for waterlevel.ie on 2019-06-17: " + JSON.stringify( dayData ) );
 
     console.log( "Query for extract from data" );
-    const { extractionId } = data[ 0 ];
+    const { extractionId } = dayData[ 0 ];
     const extract = await client.getExtract( extractionId );
     assert( extract, "Data extract is missing" );
+
+    console.log( "Query all stations for provider" );
+    const allStations = await client.listStations( "waterlevel.ie" );
+    assert( allStations.find( x => x === "Blackcastle_0000007037" ), "Blackcastle_0000007037 not found in the list of all stations for waterlevel.ie" );
+
+    console.log( "Query for station's data" );
+    const stationData = await client.getStationData( "waterlevel.ie", "Blackcastle_0000007037" );
+    assert( stationData.station.name === "Blackcastle", "Blackcastle station not returned: " + JSON.stringify( stationData ) );
 
 }());

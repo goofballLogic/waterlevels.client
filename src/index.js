@@ -6,24 +6,27 @@ function required( config, name, what ) {
     throw new Error( `Required config ${name} missing: ${what}` );
 
 }
+
 export default function( config ) {
 
     const region = required( config, "AWS_REGION", "AWS region to use for querying data" );
     const bucket = required( config, "AWS_BUCKET", "AWS bucket to use for querying data" );
     const client = new S3( { region } );
 
+    const request = ( method, options ) => client.makeUnauthenticatedRequest( method, options ).promise();
+    const listObjects = options => request( "listObjectsV2", { Bucket: bucket, Delimiter: "/", ...options } );
+    const getObject = options => request( "getObject", { Bucket: bucket, ...options } );
+
     return {
 
         async listProviders() {
 
-            const providersResult = await client.makeUnauthenticatedRequest( "listObjectsV2", {
+            const providersResult = await listObjects( { Prefix: "provider/" } );
+            return providersResult.CommonPrefixes.map( ( { Prefix } ) =>
 
-                Bucket: bucket,
-                Prefix: "provider/",
-                Delimiter: "/"
+                Prefix.substring( 9, Prefix.length - 1 )
 
-            } ).promise();
-            return providersResult.CommonPrefixes.map( ( { Prefix } ) => Prefix.substring( 9, Prefix.length - 1 ) );
+            );
 
         },
 
@@ -40,14 +43,7 @@ export default function( config ) {
 
             }() );
 
-            const daysResult = await client.makeUnauthenticatedRequest( "listObjectsV2", {
-
-                Bucket: bucket,
-                Prefix: prefix,
-                Delimiter: "/",
-                StartAfter: startAfter
-
-            } ).promise();
+            const daysResult = await listObjects( { Prefix: prefix, StartAfter: startAfter } );
 
             return daysResult.Contents
                 .map( x => x.Key.substring( prefix.length ) )
@@ -56,17 +52,32 @@ export default function( config ) {
 
         },
 
-        async getData( provider, day ) {
+        async listStations( provider ) {
 
-            const result = await client.makeUnauthenticatedRequest( "getObject", {
+            const prefix = `provider/${provider}/station/`;
 
-                Bucket: bucket,
-                Key: `provider/${provider}/day/${day}`
+            const stationsResult = await listObjects( { Prefix: prefix } );
 
-            } ).promise();
+            return stationsResult.Contents
+                .map( x => x.Key.substring( prefix.length ) )
+                .sort();
+
+        },
+
+        async getDayData( provider, day ) {
+
+            const result = await getObject( { Key: `provider/${provider}/day/${day}` } );
             const body = result.Body.toString();
             const json = JSON.parse( body );
             return Object.values( json );
+
+        },
+
+        async getStationData( provider, station ) {
+
+            const result = await getObject( { Key: `provider/${provider}/station/${station}` } );
+            const body = result.Body.toString();
+            return JSON.parse( body );
 
         },
 
