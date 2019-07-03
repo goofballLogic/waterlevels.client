@@ -17,7 +17,7 @@ export default function( config ) {
     const listObjects = options => request( "listObjectsV2", { Bucket: bucket, Delimiter: "/", ...options } );
     const getObject = options => request( "getObject", { Bucket: bucket, ...options } );
 
-    return {
+    const api = {
 
         async listProviders() {
 
@@ -81,6 +81,17 @@ export default function( config ) {
 
         },
 
+        async getStationGroupData( provider, stations ) {
+
+            const results = await Promise.all( stations.map( station => api.getStationData( provider, station ) ) );
+            return stations.reduce( ( index, station, i ) => ( {
+                ...index,
+                [ station ]: results[ i ]
+
+            } ), {} );
+
+        },
+
         async getExtract( extractionId ) {
 
             const result = await client.makeUnauthenticatedRequest( "getObject", {
@@ -94,5 +105,6 @@ export default function( config ) {
         }
 
     };
+    return api;
 
 };

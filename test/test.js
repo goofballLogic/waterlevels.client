@@ -33,4 +33,13 @@ const client = clientFactory( process );
     const stationData = await client.getStationData( "waterlevel.ie", "Blackcastle_0000007037" );
     assert( stationData.station.name === "Blackcastle", "Blackcastle station not returned: " + JSON.stringify( stationData ) );
 
+    console.log( "Query for a group of stations" );
+    const group = [
+        "Ballycarroon_0000034007",
+        "Ballycorey_0000027002",
+        "Ballycotton_0000019068"
+    ];
+    const stationGroupData = await client.getStationGroupData( "waterlevel.ie", group );
+    assert( Object.keys( stationGroupData ).join( "/" ) === group.join( "/" ), `Missing one of ${JSON.stringify( group )}: ${JSON.stringify( stationGroupData )}` );
+
 }());
