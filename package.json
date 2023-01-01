@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/goofballLogic/waterlevels.client#readme",
   "devDependencies": {
-    "webpack": "^4.35.0",
-    "webpack-cli": "^3.3.4"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "dependencies": {
     "aws-sdk": "^2.480.0"
